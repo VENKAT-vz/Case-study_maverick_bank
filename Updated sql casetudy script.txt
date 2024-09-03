@@ -1,0 +1,83 @@
+Create database testmaverick;
+use testmaverick;
+
+CREATE TABLE login (
+    username VARCHAR(50),
+    emailid VARCHAR(100),
+    password VARCHAR(255),
+    role VARCHAR(50),
+    PRIMARY KEY (username, emailid)
+);
+
+CREATE TABLE users (
+    firstname VARCHAR(50),
+    lastname VARCHAR(50),
+    dateOfBirth DATE,
+    gender CHAR(1),
+    contact_number VARCHAR(15),
+    address VARCHAR(255),
+    city VARCHAR(50),
+    state VARCHAR(50),
+    aadhar_num VARCHAR(12) UNIQUE NULL,
+    pan_num VARCHAR(10) UNIQUE NULL,
+    status VARCHAR(20),
+    username VARCHAR(50),
+    emailid VARCHAR(100),
+    PRIMARY KEY (username, emailid)
+);
+
+CREATE TABLE accounts (
+    account_number VARCHAR(20) PRIMARY KEY,
+    balance double,
+    branch_name VARCHAR(100),
+    ifsc_code VARCHAR(11),
+    date_created DATE,
+    username VARCHAR(50),
+    emailid VARCHAR(100),
+    FOREIGN KEY (username, emailid) REFERENCES users(username, emailid) ON DELETE CASCADE
+);
+
+
+CREATE TABLE beneficiary (
+    beneficiary_name VARCHAR(100),
+    beneficiary_accnum VARCHAR(20),
+    beneficiary_bank_name VARCHAR(100),
+    beneficiary_branch_name VARCHAR(100),
+    beneficiary_ifsc_code VARCHAR(11),
+    nickname VARCHAR(50),
+    username VARCHAR(50),
+    emailid VARCHAR(100),
+    PRIMARY KEY (username, emailid),
+    FOREIGN KEY (username, emailid) REFERENCES users(username, emailid) ON DELETE CASCADE
+);
+CREATE TABLE transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_number VARCHAR(20),
+    transaction_type VARCHAR(50),
+    amount double,
+    transaction_date DATE,
+    description VARCHAR(255),
+    FOREIGN KEY (account_number) REFERENCES accounts(account_number) ON DELETE CASCADE
+);
+
+CREATE TABLE loan_lists (
+    loan_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    loan_name VARCHAR(100),
+    amount Double,
+    interest_rate double,
+    installments INT,
+    eligible_income Double
+);
+
+CREATE TABLE loans (
+    loan_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_number VARCHAR(20),
+    loan_type VARCHAR(50),
+    amount DOUBLE,
+    interest_rate DECIMAL(5, 2),  
+    installments INT,
+    purpose VARCHAR(255),
+    loan_created_date DATE,
+    status VARCHAR(20),
+    FOREIGN KEY (account_number) REFERENCES accounts(account_number) ON DELETE CASCADE
+);
