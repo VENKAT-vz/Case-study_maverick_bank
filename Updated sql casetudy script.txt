@@ -28,6 +28,7 @@ CREATE TABLE users (
 
 CREATE TABLE accounts (
     account_number VARCHAR(20) PRIMARY KEY,
+    account_type VARCHAR(20),
     balance double,
     branch_name VARCHAR(100),
     ifsc_code VARCHAR(11),
